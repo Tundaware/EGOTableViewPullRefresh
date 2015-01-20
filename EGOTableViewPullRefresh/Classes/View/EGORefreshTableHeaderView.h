@@ -46,6 +46,7 @@ typedef enum {
 @property (nonatomic, strong) UIColor *textColor;
 @property (nonatomic) CGFloat flipAnimationDuration;
 @property (nonatomic, strong) UILabel *statusLabel;
+@property (nonatomic, strong) UILabel *lastUpdatedLabel;
 
 -(id)initWithFrame:(CGRect)frame arrowImageName:(NSString *)arrow textColor:(UIColor *)textColor;
 

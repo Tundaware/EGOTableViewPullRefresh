@@ -36,27 +36,25 @@
 		self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		self.backgroundColor = [UIColor colorWithRed:226.0/255.0 green:231.0/255.0 blue:237.0/255.0 alpha:1.0];
 		
-		UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, frame.size.height - 30.0f, self.frame.size.width, 20.0f)];
-		label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-		label.font = [UIFont systemFontOfSize:12.0f];
-		label.textColor = textColor;
-		label.shadowColor = [UIColor colorWithWhite:0.9f alpha:1.0f];
-		label.shadowOffset = CGSizeMake(0.0f, 1.0f);
-		label.backgroundColor = [UIColor clearColor];
-		label.textAlignment = NSTextAlignmentCenter;
-		[self addSubview:label];
-		_lastUpdatedLabel=label;
+		_lastUpdatedLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, frame.size.height - 30.0f, self.frame.size.width, 20.0f)];
+		_lastUpdatedLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+		_lastUpdatedLabel.font = [UIFont systemFontOfSize:12.0f];
+		_lastUpdatedLabel.textColor = textColor;
+		_lastUpdatedLabel.shadowColor = [UIColor colorWithWhite:0.9f alpha:1.0f];
+		_lastUpdatedLabel.shadowOffset = CGSizeMake(0.0f, 1.0f);
+		_lastUpdatedLabel.backgroundColor = [UIColor clearColor];
+		_lastUpdatedLabel.textAlignment = NSTextAlignmentCenter;
+		[self addSubview:_lastUpdatedLabel];
 		
-		label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, frame.size.height - 48.0f, self.frame.size.width, 20.0f)];
-		label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-		label.font = [UIFont boldSystemFontOfSize:13.0f];
-		label.textColor = textColor;
-		label.shadowColor = [UIColor colorWithWhite:0.9f alpha:1.0f];
-		label.shadowOffset = CGSizeMake(0.0f, 1.0f);
-		label.backgroundColor = [UIColor clearColor];
-		label.textAlignment = NSTextAlignmentCenter;
-		[self addSubview:label];
-		_statusLabel=label;
+		_statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, frame.size.height - 48.0f, self.frame.size.width, 20.0f)];
+		_statusLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+		_statusLabel.font = [UIFont boldSystemFontOfSize:13.0f];
+		_statusLabel.textColor = textColor;
+		_statusLabel.shadowColor = [UIColor colorWithWhite:0.9f alpha:1.0f];
+		_statusLabel.shadowOffset = CGSizeMake(0.0f, 1.0f);
+		_statusLabel.backgroundColor = [UIColor clearColor];
+		_statusLabel.textAlignment = NSTextAlignmentCenter;
+		[self addSubview:_statusLabel];
 		
 		CALayer *layer = [CALayer layer];
 		layer.frame = CGRectMake(25.0f, frame.size.height - 65.0f, 30.0f, 55.0f);
@@ -103,8 +101,8 @@
 
 -(void)setTextColor:(UIColor *)textColor {
 	_textColor = textColor;
-	[_statusLabel setTextColor:self.textColor];
-	[_statusLabel setNeedsDisplay];
+	[self.statusLabel setTextColor:self.textColor];
+	[self.statusLabel setNeedsDisplay];
 }
 
 -(void)refreshLastUpdatedDate {
@@ -118,13 +116,13 @@
 		[dateFormatter setDateStyle:NSDateFormatterShortStyle];
 		[dateFormatter setTimeStyle:NSDateFormatterShortStyle];
 		
-		_lastUpdatedLabel.text = [NSString stringWithFormat:@"Last Updated: %@", [dateFormatter stringFromDate:date]];
-		[[NSUserDefaults standardUserDefaults] setObject:_lastUpdatedLabel.text forKey:@"EGORefreshTableView_LastRefresh"];
+		self.lastUpdatedLabel.text = [NSString stringWithFormat:@"Last Updated: %@", [dateFormatter stringFromDate:date]];
+		[[NSUserDefaults standardUserDefaults] setObject:self.lastUpdatedLabel.text forKey:@"EGORefreshTableView_LastRefresh"];
 		[[NSUserDefaults standardUserDefaults] synchronize];
 		
 	} else {
 		
-		_lastUpdatedLabel.text = nil;
+		self.lastUpdatedLabel.text = nil;
 		
 	}
 	
@@ -135,7 +133,7 @@
 	switch (aState) {
 		case EGOOPullRefreshPulling:
 			
-			_statusLabel.text = NSLocalizedString(@"Release to refresh...", @"Release to refresh status");
+			self.statusLabel.text = NSLocalizedString(@"Release to refresh...", @"Release to refresh status");
 			[CATransaction begin];
 			[CATransaction setAnimationDuration:self.flipAnimationDuration];
 			_arrowImage.transform = CATransform3DMakeRotation((M_PI / 180.0) * 180.0f, 0.0f, 0.0f, 1.0f);
@@ -151,7 +149,7 @@
 				[CATransaction commit];
 			}
 			
-			_statusLabel.text = NSLocalizedString(@"Pull down to refresh...", @"Pull down to refresh status");
+			self.statusLabel.text = NSLocalizedString(@"Pull down to refresh...", @"Pull down to refresh status");
 			[_activityView stopAnimating];
 			[CATransaction begin];
 			[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
@@ -164,7 +162,7 @@
 			break;
 		case EGOOPullRefreshLoading:
 			
-			_statusLabel.text = NSLocalizedString(@"Loading...", @"Loading Status");
+			self.statusLabel.text = NSLocalizedString(@"Loading...", @"Loading Status");
 			[_activityView startAnimating];
 			[CATransaction begin];
 			[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
@@ -252,7 +250,7 @@
 #pragma mark Dealloc
 
 -(void)dealloc {
-	_delegate=nil;
+	_delegate = nil;
 	_activityView = nil;
 	_statusLabel = nil;
 	_arrowImage = nil;
