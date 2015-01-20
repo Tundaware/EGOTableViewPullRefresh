@@ -77,7 +77,6 @@
 		[self addSubview:view];
 		_activityView = view;
 		
-		
 		[self setState:EGOOPullRefreshNormal];
 		
 	}

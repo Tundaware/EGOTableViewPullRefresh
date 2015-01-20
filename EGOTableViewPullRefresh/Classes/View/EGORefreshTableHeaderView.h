@@ -37,7 +37,6 @@ typedef enum {
 
 @interface EGORefreshTableHeaderView : UIView {
 	UILabel *_lastUpdatedLabel;
-	UILabel *_statusLabel;
 	CALayer *_arrowImage;
 	UIActivityIndicatorView *_activityView;
 }
@@ -46,6 +45,7 @@ typedef enum {
 @property (nonatomic) EGOPullRefreshState state;
 @property (nonatomic, strong) UIColor *textColor;
 @property (nonatomic) CGFloat flipAnimationDuration;
+@property (nonatomic, strong) UILabel *statusLabel;
 
 -(id)initWithFrame:(CGRect)frame arrowImageName:(NSString *)arrow textColor:(UIColor *)textColor;
 
