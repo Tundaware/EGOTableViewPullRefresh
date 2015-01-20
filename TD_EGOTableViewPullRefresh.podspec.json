@@ -1,0 +1,22 @@
+{
+    "name": "TD_EGOTableViewPullRefresh",
+    "version": "1.0.0",
+    "platforms": {
+        "ios": null
+    },
+    "license": "MIT",
+    "summary": "A similar control to the pull down to refresh control created by atebits in Tweetie 2.",
+    "homepage": "https://github.com/Tundaware/EGOTableViewPullRefresh",
+    "authors": {
+        "Devin Doty": "devin.r.doty@gmail.com",
+        "Tundaware LLC": "george@tundaware.com"
+    },
+    "source": {
+        "git": "https://github.com/Tundaware/EGOTableViewPullRefresh.git",
+        "tag": "1.0.0"
+    },
+    "source_files": "EGOTableViewPullRefresh/Classes/View/*.{h,m}",
+    "resources": "EGOTableViewPullRefresh/Resources/*.png",
+    "frameworks": "QuartzCore",
+    "requires_arc": true
+}
