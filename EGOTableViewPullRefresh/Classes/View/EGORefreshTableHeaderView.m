@@ -26,13 +26,12 @@
 
 #import "EGORefreshTableHeaderView.h"
 
-#define TEXT_COLOR	 [UIColor colorWithRed:87.0/255.0 green:108.0/255.0 blue:137.0/255.0 alpha:1.0]
-#define FLIP_ANIMATION_DURATION 0.18f
-
 @implementation EGORefreshTableHeaderView
+@synthesize textColor = _textColor;
 
 -(id)initWithFrame:(CGRect)frame arrowImageName:(NSString *)arrow textColor:(UIColor *)textColor {
 	if((self = [super initWithFrame:frame])) {
+		_flipAnimationDuration = 0.18f;
 		
 		self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		self.backgroundColor = [UIColor colorWithRed:226.0/255.0 green:231.0/255.0 blue:237.0/255.0 alpha:1.0];
@@ -88,11 +87,26 @@
 }
 
 -(id)initWithFrame:(CGRect)frame  {
-	return [self initWithFrame:frame arrowImageName:@"blueArrow.png" textColor:TEXT_COLOR];
+	return [self initWithFrame:frame arrowImageName:@"blueArrow.png" textColor:self.textColor];
+}
+
+#pragma mark -
+#pragma mark Getters
+-(UIColor *)textColor {
+	return _textColor ?: (_textColor = [UIColor darkGrayColor]);
+}
+-(CGFloat)flipAnimationDuration {
+	return _flipAnimationDuration;
 }
 
 #pragma mark -
 #pragma mark Setters
+
+-(void)setTextColor:(UIColor *)textColor {
+	_textColor = textColor;
+	[_statusLabel setTextColor:self.textColor];
+	[_statusLabel setNeedsDisplay];
+}
 
 -(void)refreshLastUpdatedDate {
 	
@@ -124,7 +138,7 @@
 			
 			_statusLabel.text = NSLocalizedString(@"Release to refresh...", @"Release to refresh status");
 			[CATransaction begin];
-			[CATransaction setAnimationDuration:FLIP_ANIMATION_DURATION];
+			[CATransaction setAnimationDuration:self.flipAnimationDuration];
 			_arrowImage.transform = CATransform3DMakeRotation((M_PI / 180.0) * 180.0f, 0.0f, 0.0f, 1.0f);
 			[CATransaction commit];
 			
@@ -133,7 +147,7 @@
 			
 			if (self.state == EGOOPullRefreshPulling) {
 				[CATransaction begin];
-				[CATransaction setAnimationDuration:FLIP_ANIMATION_DURATION];
+				[CATransaction setAnimationDuration:self.flipAnimationDuration];
 				_arrowImage.transform = CATransform3DIdentity;
 				[CATransaction commit];
 			}
