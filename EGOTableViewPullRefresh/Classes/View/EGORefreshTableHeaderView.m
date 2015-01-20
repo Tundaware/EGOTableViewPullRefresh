@@ -128,6 +128,9 @@
 	
 }
 
+-(void)setStateSilently:(EGOPullRefreshState)state {
+	_state = state;
+}
 -(void)setState:(EGOPullRefreshState)aState{
 	
 	switch (aState) {
