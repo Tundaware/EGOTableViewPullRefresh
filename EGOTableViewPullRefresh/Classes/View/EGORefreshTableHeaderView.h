@@ -44,6 +44,8 @@ typedef enum{
 
 @property (nonatomic, weak) id<EGORefreshTableHeaderDelegate> delegate;
 @property (nonatomic) EGOPullRefreshState state;
+@property (nonatomic, strong) UIColor *textColor;
+@property (nonatomic) CGFloat flipAnimationDuration;
 
 -(id)initWithFrame:(CGRect)frame arrowImageName:(NSString *)arrow textColor:(UIColor *)textColor;
 
@@ -54,7 +56,7 @@ typedef enum{
 
 @end
 
-@protocol EGORefreshTableHeaderDelegate
+@protocol EGORefreshTableHeaderDelegate<NSObject>
 -(void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view;
 -(BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view;
 @optional

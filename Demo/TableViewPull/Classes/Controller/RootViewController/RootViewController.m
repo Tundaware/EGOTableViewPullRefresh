@@ -37,7 +37,6 @@
 		view.delegate = self;
 		[self.tableView addSubview:view];
 		_refreshHeaderView = view;
-		[view release];
 		
 	}
 	
@@ -69,7 +68,7 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
 	// Configure the cell.
@@ -79,7 +78,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
 	
-	return [NSString stringWithFormat:@"Section %i", section];
+	return [NSString stringWithFormat:@"Section %li", (long)section];
 	
 }
 
@@ -157,7 +156,6 @@
 - (void)dealloc {
 	
 	_refreshHeaderView = nil;
-    [super dealloc];
 }
 
 
